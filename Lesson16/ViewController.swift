@@ -96,7 +96,6 @@ class ViewController: UIViewController {
         
     }
 
-
 }
 
 private extension ViewController {
@@ -175,38 +174,74 @@ private extension ViewController {
     }
     
     @objc
-    func handleSingleTapGesture() {
-        if isColorChanged {
-            UIView.animate(withDuration: 0.5) {
-                self.box.backgroundColor = self.originalColor
-            }
-        } else {
-            UIView.animate(withDuration: 0.5) {
-                self.box.backgroundColor = UIColor.black
-            }
+    func handleSingleTapGesture(_ recognizer: UIRotationGestureRecognizer) {
+        switch recognizer.state {
+            
+        case .possible:
+            break
+        case .began:
+            break
+        case .changed:
+            break
+        case .ended:
+            
+            //            if isColorChanged {
+            //                UIView.animate(withDuration: 0.5) {
+            //                    self.box.backgroundColor = self.originalColor
+            //                }
+            //            } else {
+            //                UIView.animate(withDuration: 0.5) {
+            //                    self.box.backgroundColor = UIColor.black
+            //                }
+            //            }
+            
+            isColorChanged == false ? UIView.animate(withDuration: 0.5) { self.box.backgroundColor = self.originalColor } : UIView.animate(withDuration: 0.5) { self.box.backgroundColor = UIColor.black }
+            
+            isColorChanged.toggle()
+        case .cancelled:
+            break
+        case .failed:
+            break
+        @unknown default:
+            break
         }
-        
-        isColorChanged.toggle()
     }
     
     @objc
-    func handleDoubleTapGesture() {
-        widthConstraint.constant = initialBoxWidth
-        heightConstraint.constant = initialBoxHeight
-        centerXConstraint.constant = 0.0
-        centerYConstraint.constant = 0.0
-
-        UIView.animate(
-            withDuration: 0.3,
-            delay: 0.0,
-            options: [.curveEaseInOut],
-            animations: {
-                self.scale = 1.0
-                self.rotation = 0.0
-                self.view.layoutIfNeeded()
-            },
-            completion: nil
-        )
+    
+    func handleDoubleTapGesture(_ recognizer: UIRotationGestureRecognizer) {
+        switch recognizer.state {
+            
+        case .possible:
+            break
+        case .began:
+            break
+        case .changed:
+            break
+        case .ended:
+            widthConstraint.constant = initialBoxWidth
+            heightConstraint.constant = initialBoxHeight
+            centerXConstraint.constant = 0.0
+            centerYConstraint.constant = 0.0
+            
+            UIView.animate(
+                withDuration: 0.3,
+                delay: 0.0,
+                options: [.curveEaseInOut],
+                animations: {
+                    self.scale = 1.0
+                    self.rotation = 0.0
+                    self.view.layoutIfNeeded()
+                },
+                completion: nil
+            )
+        case .cancelled:
+            break
+        case .failed:
+            break
+        @unknown default:
+            break
+        }
     }
 }
 
